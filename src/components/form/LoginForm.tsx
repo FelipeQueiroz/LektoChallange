@@ -11,10 +11,16 @@ import { StyledInput } from './styles'
 import { LoginFormInputs } from './types'
 import { schemaLogin } from './schemas'
 import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react'
+import { useLoginMutation } from '../../redux/api/api'
 
 export default function LoginForm() {
   const toast = useToast()
+  const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
+
+  const [login] = useLoginMutation()
+
   const {
     register,
     handleSubmit,
@@ -25,31 +31,33 @@ export default function LoginForm() {
   })
 
   const onSubmit = async (values: LoginFormInputs) => {
-    fetch(
-      `https://localhost:7202/api/User/Login?email=${values.email}&password=${values.password}`,
-      { method: 'POST', mode: 'cors' },
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        navigate('/home')
-        toast({
-          title: 'Login feito com sucesso :)',
-          status: 'success',
-          duration: 9000,
-          position: 'bottom',
-          isClosable: true,
-        })
-        window.localStorage.setItem('user', JSON.stringify(data))
+    try {
+      setIsLoading(true)
+      const { password, email } = values
+      const response = await login({ password, email }).unwrap()
+      toast({
+        title: 'Login feito com sucesso :)',
+        status: 'success',
+        duration: 9000,
+        position: 'bottom',
+        isClosable: true,
       })
-      .catch(() => {
-        toast({
-          title: 'Credenciais inválidas.',
-          status: 'error',
-          duration: 9000,
-          position: 'bottom',
-          isClosable: true,
-        })
+
+      setIsLoading(false)
+
+      window.localStorage.setItem('user', JSON.stringify(response))
+      navigate('/home')
+    } catch (e) {
+      toast({
+        title: 'Credenciais inválidas.',
+        status: 'error',
+        duration: 9000,
+        position: 'bottom',
+        isClosable: true,
       })
+
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -80,6 +88,7 @@ export default function LoginForm() {
         w="100%"
         variant="solid"
         colorScheme="blue"
+        isLoading={isLoading}
         disabled={!!errors.email || !!errors.password}
       >
         Login

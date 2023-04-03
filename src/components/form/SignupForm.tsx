@@ -1,6 +1,6 @@
 import {
-  Box,
   Button,
+  Card,
   FormControl,
   FormErrorMessage,
   IconButton,
@@ -12,13 +12,17 @@ import { useNavigate } from 'react-router-dom'
 import { StyledInput } from './styles'
 import { SignUpFormInputs } from './types'
 import InputMask from 'react-input-mask'
-import React from 'react'
-import { AddIcon } from '@chakra-ui/icons'
+import React, { useState } from 'react'
 import { schemaSignup } from './schemas'
+import { DeleteIcon } from '@chakra-ui/icons'
+import { useCreateUserMutation } from '../../redux/api/api'
 
 export default function SignupForm() {
   const navigate = useNavigate()
   const toast = useToast()
+
+  const [createUser] = useCreateUserMutation()
+  const [isLoading, setIsLoading] = useState(false)
 
   const {
     register,
@@ -36,23 +40,18 @@ export default function SignupForm() {
   })
 
   const onSubmit = async (values: SignUpFormInputs) => {
-    const { address, cpf, cellphone, password, email, name } = values
-
-    fetch('https://localhost:7202/api/User', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name,
-        email,
-        address,
-        cpf,
-        cellphone,
-        password,
-      }),
-    }).catch(() => {
+    setIsLoading(true)
+    try {
+      await createUser(values).unwrap()
+      toast({
+        title: 'Conta criada com sucesso! :)',
+        status: 'success',
+        duration: 9000,
+        position: 'bottom',
+        isClosable: true,
+      })
       navigate('/')
+    } catch (e) {
       toast({
         title: 'Aconteceu algum erro, tente novamente!',
         status: 'error',
@@ -60,7 +59,8 @@ export default function SignupForm() {
         position: 'bottom',
         isClosable: true,
       })
-    })
+    }
+    setIsLoading(false)
   }
 
   return (
@@ -79,14 +79,17 @@ export default function SignupForm() {
           control={control}
           defaultValue=""
           render={({ field: { onChange, value } }) => (
-            <InputMask mask="999.999.999-99" value={value} onChange={onChange}>
-              {(inputProps) => (
-                <StyledInput type="text" placeHolder={'CPF'} {...inputProps} />
-              )}
+            <InputMask
+              mask="999.999.999-99"
+              value={value}
+              name={'cpf'}
+              onChange={onChange}
+              disabled={false}
+            >
+              <StyledInput type="text" name={'cpf'} placeholder="CPF" />
             </InputMask>
           )}
         />
-
         <FormErrorMessage ml={1}>{errors?.cpf?.message}</FormErrorMessage>
       </FormControl>
       <FormControl isInvalid={!!errors?.cellphone?.message} isRequired>
@@ -95,14 +98,17 @@ export default function SignupForm() {
           control={control}
           defaultValue=""
           render={({ field: { onChange, value } }) => (
-            <InputMask mask="(99) 99999-9999" value={value} onChange={onChange}>
-              {(inputProps) => (
-                <StyledInput
-                  type="text"
-                  placeHolder={'Celular'}
-                  {...inputProps}
-                />
-              )}
+            <InputMask
+              mask="(99) 99999-9999"
+              name="cellphone"
+              value={value}
+              onChange={onChange}
+            >
+              <StyledInput
+                type="text"
+                name={'cellphone'}
+                placeholder={'Telefone'}
+              />
             </InputMask>
           )}
         />
@@ -118,7 +124,7 @@ export default function SignupForm() {
         isInvalid={!!errors?.password?.message}
         isRequired
       >
-        <StyledInput type="password" placeholder="Password" name="password" />
+        <StyledInput type="password" placeholder="Senha" name="password" />
         <FormErrorMessage ml={1}>{errors?.password?.message}</FormErrorMessage>
       </FormControl>
       <FormControl
@@ -128,7 +134,7 @@ export default function SignupForm() {
       >
         <StyledInput
           type="password"
-          placeholder="Confirm password"
+          placeholder="Confirmar senha"
           name="confirmPassword"
         />
         <FormErrorMessage ml={1}>
@@ -136,7 +142,13 @@ export default function SignupForm() {
         </FormErrorMessage>
       </FormControl>
       {fields.map((address, index) => (
-        <Box key={index}>
+        <Card
+          key={index}
+          backgroundColor={'gray.700'}
+          p={5}
+          my={5}
+          borderRadius={10}
+        >
           <StyledInput
             type="text"
             placeholder="Cidade"
@@ -161,30 +173,31 @@ export default function SignupForm() {
           <FormErrorMessage ml={1}>
             {errors.address && errors.address[index]?.street?.message}
           </FormErrorMessage>
-          <Button
+          <IconButton
             mt={4}
-            type="button"
             onClick={() => remove(index)}
             colorScheme="red"
-          >
-            Remover endereço
-          </Button>
-        </Box>
+            aria-label={'Exclude address'}
+            icon={<DeleteIcon />}
+          />
+        </Card>
       ))}
 
-      <IconButton
+      <Button
         onClick={() => append({ street: '', city: '', state: '' })}
         colorScheme="green"
         aria-label="Add new address"
-        icon={<AddIcon />}
         my={4}
-      />
+      >
+        Adicionar Endereço
+      </Button>
       <Button
         type={'submit'}
         mt="6"
         w="100%"
         colorScheme="blue"
         variant="solid"
+        isLoading={isLoading}
       >
         Criar uma conta
       </Button>

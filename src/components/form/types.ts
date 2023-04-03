@@ -1,8 +1,4 @@
-export interface Address {
-  street: string
-  city: string
-  state: string
-}
+import { Address } from '../../redux/api/types'
 
 export type SignUpFormInputs = {
   cpf: string
@@ -12,6 +8,14 @@ export type SignUpFormInputs = {
   password: string
   confirmPassword: string
 
+  address: Address[]
+}
+
+export type UpdateFormInputs = {
+  cpf: string
+  name: string
+  cellphone: string
+  email: string
   address: Address[]
 }
 
