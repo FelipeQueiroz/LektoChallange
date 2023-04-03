@@ -52,10 +52,20 @@ git clone https://github.com/FelipeQueiroz/LektoChallenge.git
 cd LektoChallenge
 npm install
 ```
-3. Execute a aplicação:
+
+3. Vá até o arquivo `api.ts` localizado na pasta: `src/redux/api` e coloque a url da API C# feita por mim neste [link.](https://github.com/FelipeQueiroz/LektoChallenge-API)
+
+```js
+const baseQuery = fetchBaseQuery({
+  baseUrl: `https://localhost:7202/api`,
+})
+
+```
+
+4. Execute a aplicação:
 
 ```bash
-npm start
+npm run dev
 ```
 
 ## Conclusão
