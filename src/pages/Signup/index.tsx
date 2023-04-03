@@ -9,7 +9,6 @@ export const Signup = () => {
     <Flex
       align={'center'}
       w="100%"
-      height={'80vh'}
       gap={20}
       display={{ md: 'flex', base: 'block' }}
     >
