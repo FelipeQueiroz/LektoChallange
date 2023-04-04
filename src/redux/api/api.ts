@@ -9,7 +9,7 @@ import {
 } from './types'
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: `https://localhost:7202/api`,
+  baseUrl: `http://localhost:5211/api`,
 })
 
 // Define a service using a base URL and expected endpoints

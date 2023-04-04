@@ -81,9 +81,6 @@ export const Contact = () => {
         aria-label={'Entrar em contato'}
         onClick={handleOpenModal}
         icon={<InfoIcon />}
-        pos="absolute"
-        top="1rem"
-        left="1rem"
       />
 
       <Modal isOpen={isOpen} onClose={onClose}>

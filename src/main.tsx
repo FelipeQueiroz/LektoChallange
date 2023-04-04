@@ -4,18 +4,16 @@ import { ChakraProvider } from '@chakra-ui/react'
 import App from './App'
 import { ThemeProvider } from 'styled-components'
 import { defaultTheme } from './core/theme'
-import { Toggle } from './components/Toggle'
 import { Provider } from 'react-redux'
 import { store } from './redux/store/store'
-import { Contact } from './components/Contact'
+import { Header } from './components/Header'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <Provider store={store}>
     <ChakraProvider>
       <ThemeProvider theme={defaultTheme}>
         <App />
-        <Contact />
-        <Toggle />
+        <Header />
       </ThemeProvider>
     </ChakraProvider>
   </Provider>,

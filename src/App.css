@@ -1,6 +1,14 @@
 #root {
-  padding: 2rem;
-  min-width: 100%;
-  text-align: center;
+    min-width: 100%;
+    text-align: center;
 }
 
+
+.disableScroll {
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
+}
+
+.disableScroll::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+}

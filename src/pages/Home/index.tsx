@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { StyledLink, Wrapper } from './styles'
 import { useEffect, useState } from 'react'
 import { User } from '../../redux/api/types'
+import HomeBg from '../../assets/home-bg.jpg'
 
 export const Home = () => {
   const navigate = useNavigate()
@@ -25,13 +26,17 @@ export const Home = () => {
   }
 
   return (
-    <Flex
-      width={'100%'}
-      height={'80vh'}
-      alignContent={'center'}
-      justifyContent={'center'}
-    >
-      <Center>
+    <Flex width={'100%'} maxHeight={'100vh'} overflow={'hidden'}>
+      <Center
+        display={['none', 'none', 'initial']}
+        backgroundImage={`url("${HomeBg}")`}
+        style={{ backgroundPositionY: 'bottom' }}
+        backgroundSize={'cover'}
+        width={'48%'}
+        height={'100vh'}
+        backgroundColor={'#FFF'}
+      />
+      <Center p={20} overflowY={'scroll'} className={'disableScroll'}>
         <Wrapper>
           {user && (
             <>

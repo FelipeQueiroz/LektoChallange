@@ -2,17 +2,21 @@
 import { Center, Flex, Text } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import { StyledButton, Title } from './styles'
+
+import HomeBg from '../../assets/login-bg.jpg'
 import LoginForm from '../../components/form/LoginForm'
 
 export const Login = () => {
   return (
-    <Flex
-      align={'center'}
-      w="100%"
-      height={'80vh'}
-      gap={20}
-      display={{ md: 'flex', base: 'block' }}
-    >
+    <Flex align={'center'} w="100%">
+      <Center
+        backgroundImage={`url("${HomeBg}")`}
+        backgroundSize={'cover'}
+        display={['none', 'none', 'initial']}
+        width={'48%'}
+        height={'100vh'}
+        backgroundColor={'#FFF'}
+      />
       <Center
         display="block"
         width={{ base: '100%' }}
@@ -20,7 +24,16 @@ export const Login = () => {
         ml="auto"
         mr="auto"
       >
-        <Title>Login</Title>
+        <Text
+          bgGradient="linear(to-l, #7928CA, #FF0080)"
+          bgClip="text"
+          fontSize="5xl"
+          textAlign={'left'}
+          fontWeight="extrabold"
+        >
+          Cad+ ERP
+        </Text>
+        <Title>Entre na sua conta</Title>
         <LoginForm />
         <Text textAlign={'center'} colorScheme="cyan" mt="0.9rem">
           Ainda não tem conta?
