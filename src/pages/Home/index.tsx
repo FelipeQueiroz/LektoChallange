@@ -1,6 +1,6 @@
 import { Avatar, Box, Button, Center, Flex, Text } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
-import { StyledLink, Wrapper } from './styles'
+import { Wrapper } from './styles'
 import { useEffect, useState } from 'react'
 import { User } from '../../redux/api/types'
 import HomeBg from '../../assets/home-bg.jpg'
@@ -60,10 +60,23 @@ export const Home = () => {
             </>
           )}
           <br />
-          <StyledLink to="/home/edit-profile">Editar perfil</StyledLink>
-          <Button colorScheme="red" onClick={logout} w="100%" mt="2.1rem">
-            Logout
-          </Button>
+          <Box
+            display={'flex'}
+            alignItems={'center'}
+            justifyContent={'space-between'}
+            mt="2.1rem"
+          >
+            <Button
+              onClick={() => navigate('/home/edit-profile')}
+              colorScheme="green"
+              w="47%"
+            >
+              Editar perfil
+            </Button>
+            <Button colorScheme="red" onClick={logout} w="47%">
+              Logout
+            </Button>
+          </Box>
         </Wrapper>
       </Center>
     </Flex>

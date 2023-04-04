@@ -6,18 +6,14 @@ import { StyledButton, Title } from './styles'
 
 export const Signup = () => {
   return (
-    <Flex
-      align={'center'}
-      w="100%"
-      gap={20}
-      display={{ md: 'flex', base: 'block' }}
-    >
+    <Flex align={'center'} w="100%" display={{ md: 'flex', base: 'block' }}>
       <Center
         display="block"
         width={{ base: '100%' }}
         maxW={'28.125rem'}
         ml="auto"
         mr="auto"
+        my={20}
       >
         <Title>Criar conta</Title>
         <SignupForm />
