@@ -1,15 +1,10 @@
-import { configureStore, createSlice } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit'
 import { api } from '../api/api'
 
-const reducerSlice = createSlice({
-  name: 'store',
-  initialState: {},
-  reducers: {
-    someAction: function () {},
-  },
-})
 export const store = configureStore({
-  reducer: reducerSlice.reducer,
+  reducer: {
+    [api.reducerPath]: api.reducer,
+  }, // pass reducerSlice.reducer directly
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(api.middleware),
 })
