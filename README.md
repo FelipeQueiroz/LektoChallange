@@ -1,3 +1,5 @@
+![image](https://user-images.githubusercontent.com/28742231/229689747-f5b94635-9d71-4951-9bc4-0cfa5263eb19.png)
+
 # Lekto - Desafio React e TypeScript
 
 Este é um projeto desenvolvido para o desafio proposto pela empresa Lekto. O objetivo do projeto é criar uma aplicação web para cadastro de usuário, autenticação e edição do perfil do usuário.
