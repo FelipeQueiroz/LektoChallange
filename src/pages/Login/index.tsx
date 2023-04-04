@@ -21,8 +21,8 @@ export const Login = () => {
         display="block"
         width={{ base: '100%' }}
         maxW={'28.125rem'}
-        ml="auto"
-        mr="auto"
+        mx="auto"
+        my="5rem"
       >
         <Text
           bgGradient="linear(to-l, #7928CA, #FF0080)"
