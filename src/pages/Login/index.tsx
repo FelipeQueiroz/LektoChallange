@@ -25,7 +25,7 @@ export const Login = () => {
         my="5rem"
       >
         <Text
-          bgGradient="linear(to-l, #7928CA, #FF0080)"
+          bgGradient="linear(to-l, red.50, blue.500)"
           bgClip="text"
           fontSize="5xl"
           textAlign={'left'}
